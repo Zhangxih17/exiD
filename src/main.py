@@ -4,7 +4,7 @@ import os
 import sys
 
 from data_loader.data_process import *
-from data_loader.config import DefaultConfig
+from config import DefaultConfig
 
 max_nodes = 20
 max_lanes = 8
@@ -13,12 +13,6 @@ max_objects = 10
 num_agents = 4
 #特殊值处理
 MAX_V = 100
-
-traj_map = {
-    '0_cologne_butzweiler': ['00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', \
-                             '11', '12', '13', '14', '15', '16', '17', '18'],
-    '1_cologne_deutz': []
-}
 
 
 

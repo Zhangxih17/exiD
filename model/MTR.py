@@ -80,7 +80,7 @@ class MTR(nn.Module):
 
     def save(self,name=None):
         if name is None:
-            prefix = '/content/gdrive/MyDrive/exitD/checkpoints/' + 'MTR' + '_'
+            prefix = 'checkpoints/' + 'MTR' + '_'
             name = time.strftime(prefix + '%m%d_%H:%M:%S.pth')
         torch.save(self.state_dict(),name)
         return name
