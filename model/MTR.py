@@ -19,7 +19,7 @@ MAX_V = 100
 
 class MTR(nn.Module):
     '''
-    调用此模型即可
+    VectorNet + GNN (4 agents)
     '''
     def __init__(self,in_dim,hidden_size,out_dim):
         super(MTR,self).__init__()
@@ -38,17 +38,13 @@ class MTR(nn.Module):
         MapOutputs = []
 
         agent_feature = torch.where(torch.isnan(agent_feature),torch.full_like(agent_feature, 0), agent_feature)
-        # print('Agent network 0 ', agent_feature[0])
 
         Globalfeature = torch.max(self.subAgentNetwork(agent_set[0],agent_feature[0]), dim=1)[0].unsqueeze(0)  #agent gnn
-        # print('Globalfeature0 ', Globalfeature.size(), Globalfeature)
 
         Globalfeature = torch.where(torch.isnan(Globalfeature),torch.full_like(Globalfeature, 0), Globalfeature)
-        # print('Globalfeature0 fill 0 ', Globalfeature.size(), Globalfeature)
 
         for i,graph in enumerate(agent_set):  #concate map attn
             if i>0:
-                # print('########## subAgentNetwork ##########')
                 Globalfeature = torch.cat((Globalfeature,torch.max(self.subAgentNetwork(graph,agent_feature[i]), dim=1)[0].unsqueeze(0)),0)
 
         max_mask = torch.max(torch.sum(map_mask,dim = 1),dim = 0)[0].int()
@@ -56,22 +52,16 @@ class MTR(nn.Module):
         for i,graph in enumerate(map_set):  #concate map attn
             if i >= max_mask:
                 break
-            # print('########## subMapNetwork ##########')
             Globalfeature = torch.cat((Globalfeature,torch.max(self.subMapNetwork(graph,map_feature[i]), dim=1)[0].unsqueeze(0)),0)
 
         #新增obj
         for i,graph in enumerate(obj_set):  #concate map attn
-            # if i >= max_mask:
-            #     break
-            # print('########## subObjNetwork ##########')
             Globalfeature = torch.cat((Globalfeature,torch.max(self.subObjNetwork(graph,obj_feature[i]), dim=1)[0].unsqueeze(0)),0)
 
-        # print('GlobalfeatureObj - 0 \n', Globalfeature[0])
         v_feature = []
         for i in range(Globalfeature.shape[1]):
-            # print('########## GlobalNetwork ##########')
             v_feature.append(self.GlobalNetwork(Globalfeature[:,i])[0])
-            # print('v_feature ', v_feature[0])
+
         #输出4辆agents特征
         outputs = [self.MLP[i](torch.stack(v_feature,0)) for i in range(num_agents)]
         print('MTR outputs 0-1: \n', outputs[0], '\n', outputs[1])

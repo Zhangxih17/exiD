@@ -42,9 +42,6 @@ def get_traj(file_id, map_id,  nums):
   tracks_path = 'data/tracks/' + file_id + '_tracks.csv'
   trackmeta_path = 'data/tracks/' + file_id + '_tracksMeta.csv'
   total_data = pd.read_csv(tracks_path)
-  # data=pd.DataFrame(total_data[['frame', 'trackId', 'laneletId', 'xCenter', 'yCenter', 'lonVelocity', 'latVelocity',\
-  #             'width', 'length', 'heading','leadId', 'rearId', \
-  #                   'leftLeadId', 'rightLeadId', 'leftRearId', 'rightRearId']])
   data=pd.DataFrame(total_data[['frame', 'trackId', 'laneletId', 'xCenter', 'yCenter', 'xVelocity', 'yVelocity',\
               'width', 'length', 'heading','leadId', 'rearId', \
                     'leftLeadId', 'rightLeadId', 'leftRearId', 'rightRearId']])
