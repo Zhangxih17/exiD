@@ -4,8 +4,8 @@ import torch.nn as nn
 import torch.nn.functional as F
 import time
 import dgl
-from subNetwork import *
-from GAT import *
+from model.subNetwork import *
+from model.GAT import *
 torch.set_default_tensor_type(torch.FloatTensor)
 
 max_nodes = 20

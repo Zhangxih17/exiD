@@ -3,7 +3,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 import time
 import dgl
-from subNetwork import *
+from model.subNetwork import *
 torch.set_default_tensor_type(torch.FloatTensor)
 
 

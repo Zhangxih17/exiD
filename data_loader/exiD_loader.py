@@ -9,7 +9,7 @@ import geopandas as gpd
 from functools import lru_cache
 from pathlib import Path
 from typing import Any, List, Sequence, Union
-from data_process import *
+from data_loader.data_process import *
 import torch
 import torch.utils.data as torch_data
 from torch.utils.data import DataLoader,Dataset
@@ -185,7 +185,6 @@ class exiDLoader:
                         & (self.seq_df["trackId"] == int(id))]["xCenter"])
           agent_y.append(self.seq_df[(self.seq_df["class"] == "agent") \
                         & (self.seq_df["trackId"] == int(id))]["yCenter"])
-        # print('agent_x: ', len(agent_x), len(agent_x[0]))
         agent_traj = np.column_stack((agent_x, agent_y))
         # print('agent_traj: ', agent_traj.shape)
         return agent_traj # [4,50,50]

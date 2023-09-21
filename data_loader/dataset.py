@@ -1,13 +1,15 @@
+import sys
+sys.path.append('./')
 
 from functools import lru_cache
 from pathlib import Path
 from typing import Any, List, Sequence, Union
-from data_process import *
+from data_loader.data_process import *
 import torch
 import torch.utils.data as torch_data
 from torch.utils.data import DataLoader,Dataset
 import dgl
-from exiD_loader import *
+from data_loader.exiD_loader import *
 
 max_nodes = 20
 max_lanes = 8
@@ -288,7 +290,7 @@ class MTRDataset(torch_data.Dataset):
 
 
 #test
-train_data_root = 'data/train/0/00'
-map_root = 'data/maps/0_cologne_butzweiler.osm'
-train_data = MTRDataset(train_data_root, map_root, train = True)
-print(train_data[0].agent_lane_dict)
+# train_data_root = 'data/train/0/00'
+# map_root = 'data/maps/0_cologne_butzweiler.osm'
+# train_data = MTRDataset(train_data_root, map_root, train = True)
+# print(train_data[0].agent_lane_dict)
